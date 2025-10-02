@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi aplicacion</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'mi_aplicacion/styles.css' %}">
+    <script src="{% static 'mi_aplicacion/scripts.js' %}"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #255535;
+            color: #ff0505;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Bienvenido al Django Project</h1>
+    <p>{{ mensaje }}</p>
+    <p>{{ valor }}</p>
+</body>
+</html>
