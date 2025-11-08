@@ -1,0 +1,179 @@
+/* 🌄 Fondo general */
+body {
+  background-image: url("../images/nomi.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 🧱 Estructura base: asegura que el contenido ocupe todo el alto */
+body > .container {
+  flex: 1;
+}
+
+/* 🔹 Navbar oscura con leve transparencia */
+.navbar {
+  background-color: rgba(0, 0, 0, 0.85) !important;
+  backdrop-filter: blur(5px);
+}
+
+.navbar .nav-link {
+  color: #f8f9fa !important;
+  transition: color 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+  color: #ffdd57 !important;
+}
+
+/* 🔹 Footer oscuro y coherente */
+footer {
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #f8f9fa;
+  backdrop-filter: blur(5px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: auto;
+}
+
+/* 💡 Jumbotron principal */
+.jumbotron-custom {
+  background-color: rgba(0, 0, 0, 0.55);
+  border-radius: 1rem;
+  padding: 3.5rem;
+  backdrop-filter: blur(4px);
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* 🔹 Tarjetas de recetas (destacadas, últimas, sencillas, etc.) */
+.seccion-receta,
+.receta-destacada {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 1rem;
+  backdrop-filter: blur(5px);
+  padding: 2rem;
+  color: #f8f9fa;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.seccion-receta:hover,
+.receta-destacada:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+}
+
+.seccion-receta h2,
+.receta-destacada h3,
+.receta-destacada h5 {
+  color: #ffdd57;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.seccion-receta p,
+.receta-destacada p {
+  color: #e0e0e0;
+}
+
+/* 🎨 Botones */
+.btn-outline-warning:hover,
+.btn-outline-light:hover {
+  transform: scale(1.05);
+}
+
+/* 📱 Responsividad */
+@media (max-width: 768px) {
+  .jumbotron-custom {
+    padding: 2rem;
+    min-height: auto;
+    text-align: center;
+  }
+
+  .receta-destacada,
+  .seccion-receta {
+    text-align: center;
+  }
+}
+/* 🔹 Encabezado de la página de recetas */
+.encabezado-recetas {
+  background-color: rgba(255, 255, 255, 0.15); /* blanco translúcido */
+  backdrop-filter: blur(4px);                   /* desenfoque sutil */
+  border-radius: 1rem;
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto; /* centra el bloque horizontalmente */
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+/* Ajuste en pantallas pequeñas */
+@media (max-width: 768px) {
+  .encabezado-recetas {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+}
+
+/* 🔹 Página de receta individual */
+.receta-detalle {
+  max-width: 900px;
+  margin: 3rem auto;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  border-radius: 1rem;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+}
+
+.receta-detalle h2, 
+.receta-detalle h4, 
+.receta-detalle h5 {
+  font-weight: 600;
+}
+
+/* ------------------ Image utilities: responsive + consistent sizing ------------------ */
+/* Use on <img> tags: .recipe-img (base), .recipe-img-sm, .recipe-img-lg */
+.recipe-img {
+  width: 100%;
+  display: block;
+  object-fit: cover; /* crop while keeping aspect ratio */
+  -o-object-fit: cover;
+}
+
+.recipe-img-sm {
+  height: 150px; /* used for small thumbnails */
+}
+
+.recipe-img {
+  /* default thumbnail height; adjusted by breakpoints */
+  height: 200px;
+}
+
+.recipe-img-lg {
+  height: 420px; /* large hero/detail images */
+}
+
+/* Admin thumbnail (used in list_display) fallback styling when inline styles are not present) */
+.admin-image-thumb {
+  height: 60px;
+  width: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .recipe-img { height: 180px; }
+  .recipe-img-lg { height: 320px; }
+}
+
+@media (max-width: 768px) {
+  .recipe-img { height: 140px; }
+  .recipe-img-lg { height: 220px; }
+}

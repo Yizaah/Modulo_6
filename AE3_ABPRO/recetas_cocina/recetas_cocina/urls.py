@@ -15,13 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.shortcuts import render
+from django.conf import settings
+
 
 def index(request):
     return render(request, 'index.html')  # Renderiza el template
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-path('', index, name='inicio'),  # Ruta raíz del sitio
+    path('', include('app_rez.urls')),  # incluir las rutas de tu app
 ]
+
+# Custom error handlers
+handler404 = 'app_rez.views.custom_404'

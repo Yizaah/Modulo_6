@@ -1,14 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-</head>
-<body class="bg-dark text-white"></body>
-<p class="text-center mt-5">¡Bienvenido a la página de recetas de Juanito!</p>
+{% extends 'base.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block title %}Inicio - Recetas Fantásticas{% endblock %}
+
+{% block content %}
+
+<div class="container my-5">
+  <div class="row">
+    <!-- 🧱 Columna derecha (Jumbotron) que aparece arriba en pantallas pequeñas -->
+    <div class="col-md-7 order-1 order-md-2">
+      <div class="p-5 mb-4 bg-light bg-opacity-75 rounded-3 shadow jumbotron-custom">
+        <div class="container-fluid py-5">
+          <h1 class="display-5 fw-bold">Recetas de cocina Fantásticas</h1>
+          <p class="fs-4">Aquí podrás encontrar recetas famosas de tu juego, serie o película favorita!</p>
+          <a class="btn btn-primary btn-lg" href="{% url 'recetas' %}" role="button">Ver todas las recetas</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🧱 Columna izquierda (Recetas destacadas dinámicas) -->
+    <div class="col-md-5 order-2 order-md-1">
+      {% if latest_recipes %}
+        {% for r in latest_recipes %}
+          <div class="bg-dark text-light rounded p-4 mb-4 shadow seccion-receta">
+            {% if r.image %}
+              <div class="mb-3 text-center">
+                <img src="{% static r.image %}" alt="{{ r.title }}" class="img-fluid recipe-img recipe-img-sm rounded" />
+              </div>
+            {% endif %}
+            <h2 class="text-warning">{{ r.title }}</h2>
+            <p class="lead">{{ r.short_description }}</p>
+            <a href="{% url 'receta_detail' r.slug %}" class="btn btn-outline-warning mt-3">Ver receta</a>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="bg-dark text-light rounded p-4 mb-4 shadow seccion-receta">
+          <h2 class="text-warning">Aún no hay recetas</h2>
+          <p class="lead">Pronto se añadirán recetas aquí. Puedes crear entradas desde el panel de administración.</p>
+          <a href="{% url 'recetas' %}" class="btn btn-outline-light mt-3">Ver todas</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

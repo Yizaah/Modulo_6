@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Contacto - Recetas Fantásticas{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-6 col-md-8">
+    <div class="p-4 bg-dark bg-opacity-75 text-light rounded shadow">
+      <h2 class="text-center text-warning mb-4">Contáctanos</h2>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="POST" action="">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="nombre" name="nombre" required placeholder="Tu nombre completo" value="{{ nombre|default:'' }}">
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Correo electrónico</label>
+          <input type="email" class="form-control" id="email" name="email" required placeholder="ejemplo@correo.com" value="{{ email|default:'' }}">
+        </div>
+
+        <div class="mb-3">
+          <label for="asunto" class="form-label">Asunto</label>
+          <input type="text" class="form-control" id="asunto" name="asunto" required placeholder="Motivo de tu mensaje" value="{{ asunto|default:'' }}">
+        </div>
+
+        <div class="mb-3">
+          <label for="mensaje" class="form-label">Mensaje</label>
+          <textarea class="form-control" id="mensaje" name="mensaje" rows="5" required placeholder="Escribe aquí tu mensaje...">{{ mensaje|default:'' }}</textarea>
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-warning fw-bold">Enviar mensaje</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

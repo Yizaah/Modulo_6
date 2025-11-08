@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}404 - Página no encontrada{% endblock %}
+
+{% block content %}
+  <div class="text-center py-5">
+    <h1 class="display-4 text-warning">404 — Página no encontrada</h1>
+    <p class="lead text-light">Lo sentimos, la receta o la página que buscas no existe o fue eliminada.</p>
+    <a class="btn btn-primary" href="{% url 'recetas' %}">Volver a recetas</a>
+  </div>
+{% endblock %}

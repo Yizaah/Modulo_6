@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if recipe %}{{ recipe.title }} - Recetas Fantásticas{% else %}Receta no encontrada - Recetas Fantásticas{% endif %}{% endblock %}
+
+{% block content %}
+  {% if recipe %}
+    <div class="bg-dark bg-opacity-75 text-light rounded p-4 shadow">
+      {% if recipe.image %}
+        <div class="text-center mb-4 recipe-detail-image">
+          <img src="{% static recipe.image %}" alt="{{ recipe.title }}" class="img-fluid recipe-img-lg rounded" />
+        </div>
+      {% endif %}
+
+      <h1 class="text-warning">{{ recipe.title }}</h1>
+      <p class="text-muted small">Publicado: {{ recipe.created_at|date:"d M Y" }}</p>
+
+      <h3 class="mt-4">Ingredientes</h3>
+      <div class="mb-4">{{ recipe.ingredients|linebreaks }}</div>
+
+      <h3>Instrucciones</h3>
+      <div class="mb-4">{{ recipe.instructions|linebreaks }}</div>
+
+      <a href="{% url 'recetas' %}" class="btn btn-secondary">Volver a recetas</a>
+    </div>
+  {% else %}
+    <div class="alert alert-warning">
+      Lo sentimos — la receta que buscas no existe o fue eliminada.
+    </div>
+    <a href="{% url 'recetas' %}" class="btn btn-primary mt-3">Volver a la lista de recetas</a>
+  {% endif %}
+{% endblock %}
