@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<div class="container my-5">
+<div class="my-5">
   <div class="row">
     <!-- 🧱 Columna derecha (Jumbotron) que aparece arriba en pantallas pequeñas -->
     <div class="col-md-7 order-1 order-md-2">
@@ -25,7 +25,7 @@
           <div class="bg-dark text-light rounded p-4 mb-4 shadow seccion-receta">
             {% if r.image %}
               <div class="mb-3 text-center">
-                <img src="{% static r.image %}" alt="{{ r.title }}" class="img-fluid recipe-img recipe-img-sm rounded" />
+                <img loading="lazy" src="{% static r.image %}" alt="{{ r.title }}" class="img-fluid recipe-img recipe-img-sm rounded" />
               </div>
             {% endif %}
             <h2 class="text-warning">{{ r.title }}</h2>

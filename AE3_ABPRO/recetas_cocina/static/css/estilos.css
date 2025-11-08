@@ -137,28 +137,29 @@ footer {
 }
 
 /* ------------------ Image utilities: responsive + consistent sizing ------------------ */
-/* Use on <img> tags: .recipe-img (base), .recipe-img-sm, .recipe-img-lg */
+/* Usage:
+   - Add `recipe-img` to any recipe <img> to make it responsive and cropped.
+   - Use `recipe-img-sm` for small thumbnails, `recipe-img-lg` for large hero/detail images.
+*/
 .recipe-img {
   width: 100%;
   display: block;
   object-fit: cover; /* crop while keeping aspect ratio */
   -o-object-fit: cover;
+  /* Use aspect-ratio to reserve layout space and avoid layout shifts */
+  aspect-ratio: 16/9;
+  height: auto; /* height controlled by aspect-ratio and container width */
 }
 
 .recipe-img-sm {
-  height: 150px; /* used for small thumbnails */
-}
-
-.recipe-img {
-  /* default thumbnail height; adjusted by breakpoints */
-  height: 200px;
+  aspect-ratio: 4/3;
 }
 
 .recipe-img-lg {
-  height: 420px; /* large hero/detail images */
+  aspect-ratio: 3/2;
 }
 
-/* Admin thumbnail (used in list_display) fallback styling when inline styles are not present) */
+/* Admin thumbnail (used in list_display) fallback styling */
 .admin-image-thumb {
   height: 60px;
   width: 60px;
@@ -167,13 +168,17 @@ footer {
   display: inline-block;
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments: reduce aspect ratio heights on smaller viewports */
 @media (max-width: 992px) {
-  .recipe-img { height: 180px; }
-  .recipe-img-lg { height: 320px; }
+  .recipe-img { aspect-ratio: 4/3; }
+  .recipe-img-lg { aspect-ratio: 16/9; }
 }
 
 @media (max-width: 768px) {
-  .recipe-img { height: 140px; }
-  .recipe-img-lg { height: 220px; }
+  .recipe-img { aspect-ratio: 1/1.2; }
+  .recipe-img-lg { aspect-ratio: 4/3; }
+  /* Avoid fixed background on mobile for performance */
+  body {
+    background-attachment: scroll;
+  }
 }

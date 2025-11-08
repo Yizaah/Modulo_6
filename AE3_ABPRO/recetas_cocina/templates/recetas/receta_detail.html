@@ -8,7 +8,7 @@
     <div class="bg-dark bg-opacity-75 text-light rounded p-4 shadow">
       {% if recipe.image %}
         <div class="text-center mb-4 recipe-detail-image">
-          <img src="{% static recipe.image %}" alt="{{ recipe.title }}" class="img-fluid recipe-img-lg rounded" />
+          <img loading="lazy" src="{% static recipe.image %}" alt="{{ recipe.title }}" class="img-fluid recipe-img-lg rounded" />
         </div>
       {% endif %}
 

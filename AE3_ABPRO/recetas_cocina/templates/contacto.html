@@ -14,7 +14,7 @@
         {% endfor %}
       {% endif %}
 
-      <form method="POST" action="">
+      <form method="POST" action="{% url 'contacto' %}" role="form" aria-labelledby="contact-heading">
         {% csrf_token %}
         <div class="mb-3">
           <label for="nombre" class="form-label">Nombre</label>
