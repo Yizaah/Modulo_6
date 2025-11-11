@@ -1,0 +1,52 @@
+
+Contexto del Proyecto: Plataforma de Gestión de Eventos
+
+Imagina que estás trabajando en equipo para desarrollar una Plataforma de Gestión de Eventos en Django. 
+La plataforma permite a los usuarios registrarse y gestionar eventos como conferencias, conciertos y seminarios.
+ Sin embargo, algunos eventos son privados y solo deben ser accesibles por ciertos usuarios. 
+ En este ejercicio, tu equipo deberá configurar el sistema de autenticación y autorización utilizando el modelo
+  Auth de Django para controlar el acceso a diferentes tipos de usuarios.
+
+Tareas del Proyecto
+
+1.- Configuración del Modelo Auth de Django:
+Explorar el modelo Auth de Django para gestionar la autenticación de los usuarios.
+Configurar el sistema de autenticación en Django para permitir el registro, 
+inicio de sesión y cierre de sesión de los usuarios. Asegúrate de que los usuarios puedan
+ acceder a las vistas de gestión de eventos solo después de iniciar sesión.
+
+2.-Enrutamiento para Login/Logout:
+Crear rutas específicas para iniciar sesión (/login) y cerrar sesión (/logout).
+Configurar las vistas y redirigir a los usuarios a la página correcta después de 
+iniciar sesión o cerrar sesión utilizando LOGIN_REDIRECT_URL y LOGOUT_REDIRECT_URL en el archivo settings.py.
+
+3-.Gestión de Roles y Permisos:
+Implementar un sistema de roles en el que existan tres tipos de usuarios: administradores, organizadores de eventos, y asistentes.
+Administradores: Tendrán acceso completo para crear, editar y eliminar eventos.
+Organizadores de eventos: Podrán crear y gestionar eventos específicos, pero no podrán eliminar eventos.
+Asistentes: Podrán ver los eventos a los que están registrados, pero no podrán modificarlos.
+Utilizar el modelo de permisos de Django para controlar el acceso a las vistas de creación y edición de eventos.
+
+4.-Uso de Mixins en el Modelo Auth:
+Aplicar LoginRequiredMixin a las vistas donde se requiere que el usuario esté autenticado para acceder (como la creación y edición de eventos).
+Usar PermissionRequiredMixin para restringir las vistas de edición y eliminación de eventos solo a los administradores y organizadores con permisos adecuados.
+
+5.-Redirección de Accesos No Autorizados:
+Configurar una vista de acceso denegado que redirija a los usuarios que intenten acceder a eventos sin tener permisos suficientes.
+Mostrar un mensaje de error cuando un usuario intente acceder a una vista restringida (por ejemplo, un evento privado).
+
+6.-Manejo de Errores y Mensajes:
+Implementar mensajes de error claros en caso de que un usuario intente realizar una acción no permitida (como editar un evento sin permisos).
+Utilizar el sistema de mensajes de Django (messages.error) para mostrar estos errores de manera amigable en las vistas.
+
+7.-Ejecutando las Migraciones:
+Ejecutar las migraciones necesarias para aplicar los cambios en el modelo de usuarios y eventos.
+Asegurarse de que las tablas correspondientes en la base de datos estén creadas correctamente y que los usuarios puedan ser autenticados y autorizados según sus roles.
+
+8.- Exploración de la Tabla auth_permission:
+Explorar la tabla auth_permission en la base de datos para ver cómo Django gestiona los permisos.
+Asignar correctamente los permisos a los usuarios para asegurar que solo los administradores y organizadores puedan editar eventos.
+
+9.-Configuración de Seguridad:
+Configurar settings.py para asegurar la plataforma, como activar el uso de sesiones y HTTPS para la autenticación.
+
