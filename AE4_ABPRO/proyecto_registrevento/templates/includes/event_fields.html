@@ -1,0 +1,13 @@
+{% comment %} Renderizado reutilizable para los campos del EventForm {% endcomment %}
+{% for field in form %}
+    <p>
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.errors %}
+            <span class="field-error">{{ field.errors|striptags }}</span>
+        {% endif %}
+        {% if field.help_text %}
+            <small>{{ field.help_text }}</small>
+        {% endif %}
+    </p>
+{% endfor %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{# Template base específico para formularios con bloques reutilizables #}
+
+{% block title %}{% block form_title %}Formulario{% endblock %} - Registro de Eventos{% endblock %}
+
+{% block content %}
+    <div class="form-container">
+        <h2>{% block form_heading %}Formulario{% endblock %}</h2>
+        
+        {% block form_instructions %}
+            <p class="instructions">Por favor, completa el siguiente formulario.</p>
+        {% endblock %}
+
+        <form method="post" {% block form_attributes %}{% endblock %}>
+            {% csrf_token %}
+
+            {% block form_content %}
+                {# Placeholder para contenido específico del formulario #}
+                <p>Este bloque debe ser reemplazado en plantillas derivadas.</p>
+            {% endblock %}
+
+            {% block form_actions %}
+                <div class="actions">
+                    <button type="submit">Guardar</button>
+                    <a href="{% url 'inicio' %}">Cancelar</a>
+                </div>
+            {% endblock %}
+        </form>
+    </div>
+
+    {% block form_scripts %}
+        {# Placeholder para scripts específicos del formulario #}
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% comment %} Partial to render each participant form (formset) {% endcomment %}
+{% for pform in participant_formset.forms %}
+    <div class="participant-form">
+        {% for field in pform %}
+            <p>
+                {{ field.label_tag }} {{ field }}
+                {% if field.errors %}
+                    <span class="field-error">{{ field.errors|striptags }}</span>
+                {% endif %}
+            </p>
+        {% endfor %}
+        <button type="button" class="remove-participant">Eliminar</button>
+    </div>
+{% endfor %}

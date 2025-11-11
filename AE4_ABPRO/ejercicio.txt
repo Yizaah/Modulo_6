@@ -1,0 +1,50 @@
+El objetivo de esta actividad es que los estudiantes trabajen en equipo para desarrollar una aplicación
+ en Django que permita a los usuarios registrar eventos. A través de este ejercicio, los estudiantes 
+ practicarán la creación, validación y procesamiento de formularios en Django, utilizando plantillas 
+ reutilizables y vinculándolo con Modelos.
+
+Contexto
+
+Aplicación de Registro de Eventos: Se desarrollará una aplicación en la que los usuarios puedan registrar
+ eventos con información como el nombre del evento, fecha, ubicación y una lista de participantes. 
+ Cada participante podrá ingresar su nombre y correo electrónico.
+
+Requisitos
+
+1.- Formulario de Registro de Eventos:
+
+El formulario debe permitir registrar los siguientes datos:
+Nombre del Evento (CharField, obligatorio)
+Fecha (DateField, obligatorio)
+Ubicación (CharField, opcional)
+
+Debe incluir validaciones:
+La fecha del evento debe ser futura.
+El nombre del evento no debe superar los 100 caracteres.
+
+2.-Formulario para Participantes:
+
+Se debe incluir un formulario para agregar múltiples participantes al evento, con los siguientes campos:
+Nombre del Participante (CharField, obligatorio)
+Correo Electrónico (EmailField, obligatorio)
+
+3.- Uso de FormClass de Django:
+
+Crear una FormClass para el formulario de eventos.
+Crear una FormClass para el formulario de participantes.
+Enlazar ambos formularios con la vista correspondiente.
+
+4.- Vistas y Templates:
+
+Crear una vista para manejar la solicitud GET (mostrar los formularios) y la solicitud POST (procesar los datos).
+Mostrar errores de validación debajo de los campos incorrectos.
+Utilizar plantillas reutilizables para el formulario de eventos y el de participantes.
+
+5.-Validación y Manejo de Errores:
+
+Si el formulario no es válido, mostrar mensajes de error adecuados.
+Si el registro es exitoso, mostrar un mensaje de confirmación.
+
+6.-Uso de Plantillas Reutilizables:
+Diseñar un template base para los formularios.
+Usar bloques en la plantilla para modificar el contenido de cada formulario específico.

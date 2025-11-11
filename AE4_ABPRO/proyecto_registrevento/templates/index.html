@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio - Registro de Eventos{% endblock %}
+
+{% block content %}
+    <h2>Bienvenido al Registro de Eventos</h2>
+    <p>Registra tu evento y añade participantes!</p>
+    <p><a href="{% url 'evento_nuevo' %}">Crear nuevo evento</a></p>
+{% endblock %}

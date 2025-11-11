@@ -1,0 +1,135 @@
+{% extends 'form_base.html' %}
+
+{% block form_title %}Registrar Evento{% endblock %}
+
+{% block form_heading %}Registrar Evento{% endblock %}
+
+{% block form_instructions %}
+    <p class="instructions">Sube tu torneo local para ser patrocinado y tener la posibildad de ganar merchandising</p>
+{% endblock %}
+
+{% block form_content %}
+    <fieldset>
+        <legend>Datos del evento</legend>
+        {% include 'includes/event_fields.html' with form=form %}
+    </fieldset>
+
+    <fieldset>
+        <legend>Participantes</legend>
+        {{ participant_formset.management_form }}
+        <div id="participants-forms">
+            {% include 'includes/participant_form.html' %}
+        </div>
+
+        <button type="button" id="add-participant">Agregar participante</button>
+
+        <!-- Empty form template (contains __prefix__ placeholders) -->
+        <template id="empty-participant-template">
+            {{ participant_formset.empty_form.as_p|safe }}
+        </template>
+    </fieldset>
+{% endblock %}
+
+{% block form_actions %}
+    <div class="actions">
+        <button type="submit">Guardar Evento</button>
+        <a href="{% url 'inicio' %}">Cancelar</a>
+    </div>
+{% endblock %}
+
+{% block form_scripts %}
+    <script>
+        (function(){
+            const addBtn = document.getElementById('add-participant');
+            if (!addBtn) return;
+
+            function reindexParticipantForms() {
+                const container = document.getElementById('participants-forms');
+                const forms = container.querySelectorAll('.participant-form');
+                forms.forEach(function (formEl, index) {
+                    // Update labels
+                    formEl.querySelectorAll('label').forEach(function (lbl) {
+                        if (lbl.htmlFor) {
+                            lbl.htmlFor = lbl.htmlFor.replace(/participants-\d+-/, 'participants-' + index + '-').replace(/id_participants-\d+-/, 'id_participants-' + index + '-');
+                        }
+                    });
+                    // Update inputs/selects/textareas
+                    formEl.querySelectorAll('input, select, textarea').forEach(function (field) {
+                        if (field.name) {
+                            field.name = field.name.replace(/participants-\d+-/, 'participants-' + index + '-');
+                        }
+                        if (field.id) {
+                            field.id = field.id.replace(/participants-\d+-/, 'participants-' + index + '-').replace(/id_participants-\d+-/, 'id_participants-' + index + '-');
+                        }
+                    });
+                });
+                // Update TOTAL_FORMS
+                const totalFormsInput = document.getElementById('id_participants-TOTAL_FORMS');
+                totalFormsInput.value = forms.length;
+            }
+
+            addBtn.addEventListener('click', function () {
+                const totalFormsInput = document.getElementById('id_participants-TOTAL_FORMS');
+                const currentCount = parseInt(totalFormsInput.value, 10);
+
+                // Get raw HTML from the template and replace __prefix__ with the new index
+                let newFormHtml = document.getElementById('empty-participant-template').innerHTML;
+                const re = /__prefix__/g;
+                newFormHtml = newFormHtml.replace(re, currentCount);
+
+                // Append the new form
+                const container = document.getElementById('participants-forms');
+                const wrapper = document.createElement('div');
+                wrapper.className = 'participant-form';
+                wrapper.innerHTML = newFormHtml;
+
+                // Add a remove button to the new form
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.className = 'remove-participant';
+                removeBtn.textContent = 'Eliminar';
+                wrapper.appendChild(removeBtn);
+
+                container.appendChild(wrapper);
+
+                // Increment TOTAL_FORMS then reindex to ensure continuous indices
+                totalFormsInput.value = currentCount + 1;
+                reindexParticipantForms();
+            });
+
+            // Delegate remove button clicks: confirm and prevent removing the last form
+            const container = document.getElementById('participants-forms');
+            container.addEventListener('click', function (e) {
+                if (e.target && e.target.classList.contains('remove-participant')) {
+                    e.preventDefault();
+                    const forms = container.querySelectorAll('.participant-form');
+                    if (forms.length <= 1) {
+                        alert('Debe quedar al menos un formulario de participante.');
+                        return;
+                    }
+                    if (!confirm('¿Eliminar este participante?')) return;
+                    const item = e.target.closest('.participant-form');
+                    if (item) item.remove();
+                    reindexParticipantForms();
+                }
+            });
+
+            // Client-side duplicate email check before submit (UX improvement)
+            const theForm = document.querySelector('form');
+            theForm.addEventListener('submit', function (e) {
+                const emailInputs = container.querySelectorAll('input[id$="-correo"]');
+                const emails = [];
+                emailInputs.forEach(function (inp) {
+                    const val = (inp.value || '').trim().toLowerCase();
+                    if (val) emails.push(val);
+                });
+                const dupes = emails.filter(function (v, i, a) { return a.indexOf(v) !== i; });
+                if (dupes.length) {
+                    e.preventDefault();
+                    const uniq = Array.from(new Set(dupes));
+                    alert('Hay correos duplicados entre participantes: ' + uniq.join(', '));
+                }
+            });
+        })();
+    </script>
+{% endblock %}
