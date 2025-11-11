@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.forms import formset_factory
 from .forms import EventForm, ParticipantForm
 from .models import Participant
-
+from .models import Event # Asegúrate de importar Event al inicio
 
 # You can keep a simple index view (project-level urls also define one).
 def index(request):
@@ -60,3 +60,14 @@ def create_event(request):
 		'form': event_form,
 		'participant_formset': participant_formset,
 	})
+
+def event_list(request):
+    # 1. Obtener todos los objetos Event de la BD
+    # El .order_by('-fecha') es opcional, para mostrar los más nuevos primero
+    eventos = Event.objects.all().order_by('-fecha') 
+
+    # 2. Enviar la lista de eventos a la plantilla
+    context = {
+        'eventos': eventos
+    }
+    return render(request, 'event_list.html', context)
