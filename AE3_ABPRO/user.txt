@@ -1,0 +1,2 @@
+user:user pass:pass
+Para revisar la agregación de recetas en el panel de admin.
