@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Registro de Usuario</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <p>
+        <label for="id_username">Nombre de usuario:</label><br>
+        {{ form.username }}
+        {% if form.username.help_text %}
+            <small>{{ form.username.help_text|safe }}</small>
+        {% endif %}
+    </p>
+
+    <p>
+        <label for="id_password1">Contraseña:</label><br>
+        {{ form.password1 }}
+        {% for error in form.password1.errors %}
+            <small style="color:red;">{{ error }}</small>
+        {% endfor %}
+    </p>
+
+    <p>
+        <label for="id_password2">Confirmar contraseña:</label><br>
+        {{ form.password2 }}
+        {% for error in form.password2.errors %}
+            <small style="color:red;">{{ error }}</small>
+        {% endfor %}
+    </p>
+
+    <button type="submit">Registrarse</button>
+</form>
+{% endblock %}
