@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Mis Eventos{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <h1 class="mb-4">Mis Eventos</h1>
+
+    {% if eventos %}
+        <ul class="list-group">
+
+            {% for evento in eventos %}
+            <li class="list-group-item">
+
+                <h3 class="fw-bold">{{ evento.nombre }}</h3>
+
+                <p><strong>Descripción:</strong> {{ evento.descripcion }}</p>
+
+                <p>
+                    <strong>Fecha de inicio:</strong> {{ evento.fecha_inicio }} <br>
+                    <strong>Fecha de fin:</strong> {{ evento.fecha_fin }}
+                </p>
+
+                <p><strong>Ubicación:</strong> {{ evento.ubicacion }}</p>
+
+                <p>
+                    <strong>Autor:</strong> {{ evento.autor.username }}
+                </p>
+
+            </li>
+            {% endfor %}
+
+        </ul>
+
+    {% else %}
+        <div class="alert alert-info">No tienes eventos creados.</div>
+    {% endif %}
+
+</div>
+{% endblock %}

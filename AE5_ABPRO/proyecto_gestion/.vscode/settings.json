@@ -1,9 +1,0 @@
-{
-    "python.defaultInterpreterPath": "C:\\Users\\yitzh\\OneDrive\\Documentos\\GitHub\\Modulo_6\\AE5_ABPRO\\venv\\Scripts\\python.exe",
-    "python.analysis.extraPaths": [
-        "C:\\Users\\yitzh\\OneDrive\\Documentos\\GitHub\\Modulo_6\\AE5_ABPRO\\venv\\Lib\\site-packages"
-    ],
-    "python.analysis.autoImportCompletions": true,
-    "python.analysis.indexing": true,
-    "python.analysis.diagnosticMode": "workspace"
-}
