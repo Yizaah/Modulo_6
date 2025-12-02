@@ -1,60 +1,68 @@
-from django.shortcuts import render, redirect
-from django.http import Http404
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from .models import Tarea
 from .forms import TareaForm
 
-# Lista en memoria para almacenar las tareas
-TAREAS = [
-    {"id": 1, "titulo": "Tarea de ejemplo", "descripcion": "Esta es una tarea inicial"}
-]
 
+# ---------------------------
+# REGISTRO
+# ---------------------------
+def signup(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            usuario = form.save()
+            login(request, usuario)
+            return redirect("lista_tareas")
+    else:
+        form = UserCreationForm()
+
+    return render(request, "registration/signup.html", {"form": form})
+
+
+# ---------------------------
+# LISTA DE TAREAS
+# ---------------------------
+@login_required
 def lista_tareas(request):
-    context = {
-        "tareas": TAREAS
-    }
-    return render(request, "tareas/lista_tareas.html", context)
+    tareas = Tarea.objects.filter(usuario=request.user)
+    return render(request, "tareas/lista_tareas.html", {"tareas": tareas})
 
+
+# ---------------------------
+# DETALLE DE TAREA
+# ---------------------------
+@login_required
 def detalle_tarea(request, id):
-    # Buscar la tarea por ID
-    tarea = next((t for t in TAREAS if t["id"] == id), None)
+    tarea = get_object_or_404(Tarea, pk=id, usuario=request.user)
+    return render(request, "tareas/detalle_tarea.html", {"tarea": tarea})
 
-    if tarea is None:
-        raise Http404("La tarea no existe")
 
-    context = {"tarea": tarea}
-    return render(request, "tareas/detalle_tarea.html", context)
-
+# ---------------------------
+# AGREGAR TAREA
+# ---------------------------
+@login_required
 def agregar_tarea(request):
     if request.method == "POST":
         form = TareaForm(request.POST)
         if form.is_valid():
-            nuevo_id = TAREAS[-1]["id"] + 1 if TAREAS else 1
-            
-            nueva_tarea = {
-                "id": nuevo_id,
-                "titulo": form.cleaned_data["titulo"],
-                "descripcion": form.cleaned_data["descripcion"],
-            }
-            TAREAS.append(nueva_tarea)
-
+            tarea = form.save(commit=False)
+            tarea.usuario = request.user
+            tarea.save()
             return redirect("lista_tareas")
     else:
         form = TareaForm()
 
     return render(request, "tareas/agregar_tarea.html", {"form": form})
 
+
+# ---------------------------
+# ELIMINAR TAREA
+# ---------------------------
+@login_required
 def eliminar_tarea(request, id):
-    global TAREAS
-
-    # Buscar la tarea
-    tarea = next((t for t in TAREAS if t["id"] == id), None)
-
-    if tarea is None:
-        raise Http404("La tarea no existe")
-
-    if request.method == "POST":
-        # Eliminar la tarea
-        TAREAS = [t for t in TAREAS if t["id"] != id]
-        return redirect("lista_tareas")
-
-    # Página de confirmación
-    return render(request, "tareas/eliminar_tarea.html", {"tarea": tarea})
+    tarea = get_object_or_404(Tarea, pk=id, usuario=request.user)
+    tarea.delete()
+    return redirect("lista_tareas")

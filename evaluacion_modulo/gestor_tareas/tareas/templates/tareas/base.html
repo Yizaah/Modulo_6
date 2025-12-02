@@ -26,6 +26,26 @@
                     <a href="{% url 'agregar_tarea' %}" class="nav-link">Agregar Tarea</a>
                 </li>
 
+                {% if user.is_authenticated %}
+                <!-- Mostrar Cerrar Sesión -->
+                <li class="nav-item">
+                    <form action="{% url 'logout' %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-light ms-2">
+                            Cerrar sesión
+                        </button>
+                    </form>
+                </li>
+                {% else %}
+                <!-- Mostrar Login y Signup -->
+                <li class="nav-item">
+                    <a href="{% url 'login' %}" class="nav-link">Iniciar sesión</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'signup' %}" class="nav-link">Registrarse</a>
+                </li>
+                {% endif %}
+
             </ul>
         </div>
     </div>
