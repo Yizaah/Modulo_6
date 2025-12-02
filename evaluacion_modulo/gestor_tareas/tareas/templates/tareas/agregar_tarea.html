@@ -1,0 +1,23 @@
+{% extends "tareas/base.html" %}
+
+{% block title %}Agregar Tarea{% endblock %}
+
+{% block content %}
+
+<a href="{% url 'lista_tareas' %}" class="btn btn-secondary mb-3">← Volver</a>
+
+<div class="card shadow">
+    <div class="card-body">
+
+        <h3 class="mb-4">Agregar Nueva Tarea</h3>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Guardar Tarea</button>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}
