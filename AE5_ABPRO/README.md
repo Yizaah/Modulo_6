@@ -88,16 +88,9 @@ python manage.py test
 
 ## Notas y próximos pasos
 - La configuración está orientada a desarrollo (`DEBUG=True`) y usa una clave secreta fija — no usar en producción.
-- Se recomienda añadir un `requirements.txt` para fijar dependencias y usar un `.env` o similar para gestionar secretos y distintos entornos.
 - Las plantillas están en español; si lo deseas, puedes traducirlas o ajustar `LANGUAGE_CODE` en `settings.py`.
 
 ## Estructura del proyecto
 - `plataforma_eventos/` - Ajustes del proyecto y rutas
 - `eventos/` - App con modelos, vistas y plantillas
 - `db.sqlite3` - Base de datos SQLite para desarrollo
-
-## Licencia
-Este proyecto no incluye un archivo de licencia. Añade uno si piensas publicar o distribuir el código.
-
----
-Si quieres, también puedo añadir un `requirements.txt`, generar un Dockerfile minimal o crear una guía `CONTRIBUTING`. ¿Cuál prefieres?
