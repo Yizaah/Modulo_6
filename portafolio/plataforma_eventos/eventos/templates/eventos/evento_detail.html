@@ -1,0 +1,17 @@
+{% extends 'eventos/base.html' %}
+
+{% block content %}
+<h2>{{ object.titulo }}</h2>
+
+<p>{{ object.descripcion }}</p>
+
+{% if perms.eventos.change_evento %}
+    <a href="{% url 'evento_update' object.pk %}">Editar</a>
+{% endif %}
+
+{% if perms.eventos.delete_evento %}
+    <a href="{% url 'evento_delete' object.pk %}">Eliminar</a>
+{% endif %}
+
+<a href="{% url 'evento_list' %}">Volver</a>
+{% endblock %}

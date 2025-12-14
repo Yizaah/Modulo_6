@@ -1,0 +1,26 @@
+{% extends 'eventos/base.html' %}
+
+{% block title %}Plataforma de Gestión de Eventos{% endblock %}
+
+{% block content %}
+<h1>Plataforma de Gestión de Eventos</h1>
+
+<p>
+    Bienvenido a la plataforma de gestión de eventos.
+    Aquí puedes crear, administrar y participar en eventos.
+</p>
+
+{% if user.is_authenticated %}
+    <a href="{% url 'evento_list' %}">
+        Ver eventos
+    </a>
+{% else %}
+    <a href="{% url 'login' %}">
+        Iniciar sesión
+    </a>
+    |
+    <a href="{% url 'register' %}">
+        Registrarse
+    </a>
+{% endif %}
+{% endblock %}
