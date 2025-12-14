@@ -2,20 +2,38 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Plataforma de Eventos</title>
+    <title>{% block title %}Eventos{% endblock %}</title>
 </head>
 <body>
 
+<header>
+    <nav>
+        <a href="{% url 'evento_list' %}">Eventos</a>
+
+        {% if user.is_authenticated %}
+            <span>Hola, {{ user.username }}</span>
+            <form method="post" action="{% url 'logout' %}" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit">Cerrar sesión</button>
+</form>
+
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'register' %}">Registrarse</a>
+        {% endif %}
+    </nav>
+</header>
+
+<hr>
+
 {% if messages %}
-    <ul>
-        {% for message in messages %}
-            <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
 {% endif %}
 
-{% block content %}
-{% endblock %}
+{% block content %}{% endblock %}
 
 </body>
 </html>
+

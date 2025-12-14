@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
@@ -8,10 +7,11 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.db.models import Q
 
 
 def home(request):
-    return HttpResponse("Plataforma de Gestión de Eventos")
+    return render(request, 'eventos/home.html')
 
 def login_view(request):
     if request.method == 'POST':
@@ -38,7 +38,7 @@ def acceso_denegado(request):
     return render(request, 'eventos/acceso_denegado.html')
 
 
-def register_view(request):
+def register(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -48,9 +48,9 @@ def register_view(request):
         else:
             User.objects.create_user(username=username, password=password)
             messages.success(request, 'Usuario creado correctamente')
-            return redirect('/login/')
+            return redirect('login')
 
-    return render(request, 'eventos/register.html')
+    return render(request, 'registration/register.html')
 
 class EventoCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Evento
@@ -94,7 +94,6 @@ class EventoDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
             'No tienes permisos para eliminar este evento.'
         )
         return redirect('acceso_denegado')
-        return redirect('acceso_denegado')
 
 class EventoDetailView(LoginRequiredMixin, DetailView):
     model = Evento
@@ -116,3 +115,21 @@ class EventoDetailView(LoginRequiredMixin, DetailView):
                 return redirect('acceso_denegado')
 
         return super().dispatch(request, *args, **kwargs)
+
+class EventoListView(LoginRequiredMixin, ListView):
+    model = Evento
+    template_name = 'eventos/evento_list.html'
+    context_object_name = 'eventos'
+
+    def get_queryset(self):
+        user = self.request.user
+
+        if user.is_superuser:
+            return Evento.objects.all()
+
+        return Evento.objects.filter(
+            Q(es_privado=False) |
+            Q(organizador=user) |
+            Q(asistentes=user)
+        ).distinct()
+

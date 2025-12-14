@@ -1,15 +1,13 @@
 {% extends 'eventos/base.html' %}
 
+{% block title %}Iniciar sesión{% endblock %}
+
 {% block content %}
 <h2>Iniciar sesión</h2>
 
 <form method="post">
     {% csrf_token %}
-    <label>Usuario:</label><br>
-    <input type="text" name="username"><br><br>
-
-    <label>Contraseña:</label><br>
-    <input type="password" name="password"><br><br>
+    {{ form.as_p }}
 
     <button type="submit">Ingresar</button>
 </form>

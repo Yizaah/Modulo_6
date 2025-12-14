@@ -1,0 +1,14 @@
+{% extends 'eventos/base.html' %}
+
+{% block content %}
+<h2>¿Eliminar evento?</h2>
+
+<p>{{ object.titulo }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmar</button>
+</form>
+
+<a href="{% url 'evento_detail' object.pk %}">Cancelar</a>
+{% endblock %}

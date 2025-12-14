@@ -1,0 +1,23 @@
+{% extends 'eventos/base.html' %}
+
+{% block title %}Eventos{% endblock %}
+
+{% block content %}
+<h1>Lista de Eventos</h1>
+
+{% if perms.eventos.add_evento %}
+    <a href="{% url 'evento_create' %}">Crear evento</a>
+{% endif %}
+
+<ul>
+    {% for evento in eventos %}
+        <li>
+            <a href="{% url 'evento_detail' evento.pk %}">
+                {{ evento.titulo }}
+            </a>
+        </li>
+    {% empty %}
+        <li>No hay eventos disponibles</li>
+    {% endfor %}
+</ul>
+{% endblock %}
